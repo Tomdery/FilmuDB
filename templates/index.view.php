@@ -30,9 +30,13 @@ $siteName = 'Filmų duomenų bazė: ';
     <?php include "_partials/sidebar.view.php"; ?>
     <div id="page-content-wrapper">
         <?php include "_partials/nav.view.php";?>
-
+        <?php include "inc/router.php";?>
         <div class="container-fluid">
-            <h1 class="mt-4"><?=$siteName; ?></h1>
+            <?php
+
+            include "inc/links.php";
+
+            ?>
         </div>
     </div>
 
