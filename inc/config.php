@@ -1,7 +1,7 @@
 <?php
 
 $host = 'localhost';
-$db   = 'forum_cinemas';
+$db   = 'filmu_db';
 $user = 'root';
 $pass = '';
 $charset = 'utf8mb4';
