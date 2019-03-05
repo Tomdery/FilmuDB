@@ -8,7 +8,6 @@ if (isset($_GET['page']))
     foreach ($links as $value => $key){
         switch(htmlspecialchars($_GET['page'])) {
             case $value:
-                include 'pages/' . $value . '.php';
                 $siteName = $key;
                 break;
         }
@@ -16,5 +15,5 @@ if (isset($_GET['page']))
 
 }
 else {
-    include "pages/home.php";
+    $siteName = "Pagrindinis puslapis";
 }

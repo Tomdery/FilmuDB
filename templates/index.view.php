@@ -1,8 +1,3 @@
-<?php
-$siteName = 'Filmų duomenų bazė: ';
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,19 +19,21 @@ $siteName = 'Filmų duomenų bazė: ';
 </head>
 
 <body>
-
 <div class="d-flex" id="wrapper">
-
     <?php include "_partials/sidebar.view.php"; ?>
     <div id="page-content-wrapper">
         <?php include "_partials/nav.view.php";?>
-        <?php include "inc/router.php";?>
+
+
+
         <div class="container-fluid">
-            <?php
+            <?php include "inc/sitename.php";?>
+            <h1><?=$siteName;?></h1>
 
-            include "inc/links.php";
+            <?php include "inc/router.php";?>
 
-            ?>
+
+
         </div>
     </div>
 

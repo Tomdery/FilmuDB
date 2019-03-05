@@ -1,31 +1,34 @@
-<form action="" method="POST">
+<?php
+if(isset($_POST['submit'])){
+    try {
+        $pdo = new PDO($dsn, $user, $pass, $options);
 
-    <?php
-    if(isset($_POST['submit'])){
-        foreach ($_POST as $data){
-            echo "$data</br>";
-        }
+        $stmt = "INSERT INTO filmai (pavadinimas, aprasymas, premjeros_data) VALUES(:pavadinimas, :aprasymas, :premjeros_data)";
+        $query = $pdo->prepare($stmt);
+        $query->execute(array(
+             ':pavadinimas' => $_POST['pavadinimas'],
+            ':aprasymas' => $_POST['aprasymas'],
+            ':premjeros_data' => $_POST['premjeros_data']
+        ));
     }
-    ?>
-    <fieldset>
-        <label for="pavadinimas">Filmo pavadinimas</label> <input type="text" name="pavadinimas" placeholder="Įveskite filmo pavadinima">
-    </fieldset>
-    <fieldset>
-        <p>Aprašymas </p>
+    catch (Expection $e) {
+        echo "Negaliu pridėti naujo įrašo";
+        echo $e->getMessage();
+        exit;
+    }
+}
+
+?>
+
+<form method="POST">
+        <p> Filmo pavadinimas</p> <input type="text" name="pavadinimas" placeholder="Įveskite filmo pavadinima">
+        <p>Aprašymas</p>
         <textarea name="aprasymas" cols="30" rows="3" placeholder="Įveskite aprašymą"></textarea>
-    </fieldset>
-    <fieldset>
-        <label for="data">Premjeros data</label> <input type="text" name="pavadinimas" placeholder="Įveskite premjeros data">
-    </fieldset>
-    <fieldset>
+        <p>Premjeros data</p> <input type="text" name="premjeros_data" placeholder="Įveskite premjeros data">
+        <p>Žanras</p>
         <select name="zanras">
             <option>Veiksmo</option>
             <option>Ne veiksmo</option>
         </select>
-    </fieldset>
-    <fieldset>
         <button type="submit" name="submit">Pridėti</button>
-    </fieldset>
-</form>
-
 </form>
