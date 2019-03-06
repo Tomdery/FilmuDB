@@ -1,5 +1,6 @@
 <?php
 
+
 try {
     $stmt = $pdo->query('SELECT * FROM filmai INNER JOIN zanrai on filmai.zanro_id = zanrai.id');
 }

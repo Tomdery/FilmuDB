@@ -1,5 +1,6 @@
 <?php
 
+
 include "inc/links.php";
 
 if (isset($_GET['page']))
