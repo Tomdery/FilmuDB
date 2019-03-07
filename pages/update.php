@@ -1,5 +1,7 @@
 <?php
 
+$id = $_GET['id'];
+
 try {
     $stmt = $pdo->query('SELECT * FROM zanrai');
 }
@@ -11,17 +13,20 @@ catch (Expeption $e) {
 $genres = $stmt->fetchAll();
 $pdo = null;
 
+
 if(isset($_POST['submit'])){
-    try {
+ try {
         $pdo = new PDO($dsn, $user, $pass, $options);
 
-        $stmt = "INSERT INTO filmai (pavadinimas, aprasymas, premjeros_data, zanro_id) VALUES(:pavadinimas, :aprasymas, :premjeros_data, :zanras)";
+        $stmt = "UPDATE filmai SET pavadinimas=:pavadinimas, aprasymas=:aprasymas, premjeros_data=:premjeros_data, zanro_id=:zanras 
+        WHERE filmai.filmo_id=:id";
         $query = $pdo->prepare($stmt);
         $query->execute(array(
              ':pavadinimas' => $_POST['pavadinimas'],
             ':aprasymas' => $_POST['aprasymas'],
             ':premjeros_data' => $_POST['premjeros_data'],
-            ':zanras' => $_POST['zanras']
+            ':zanras' => $_POST['zanras'],
+            ':id' => $id
         ));
     }
     catch (Expection $e) {
@@ -29,9 +34,11 @@ if(isset($_POST['submit'])){
         echo $e->getMessage();
         exit;
     }
-}
 
+    header('location: ?page=all-films');
+}
 ?>
+
 
 <form method="POST">
 <div class="col-sm-3">
@@ -51,7 +58,7 @@ if(isset($_POST['submit'])){
 <div class="col-sm-3">
     <label>Žanras</label>
     <select name="zanras" class="form-control">
-            <<option>Pasirinkite žanrą</option>
+            <option>Pasirinkite žanrą</option>
             <?php foreach ($genres as $genre):?>
             <option value="<?=$genre['id']?>"><?=$genre['zanras'];?></option>
             <?php endforeach;?>

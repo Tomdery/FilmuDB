@@ -9,5 +9,7 @@ $links = [
     "stats" => "Statistika",
     "add-film" => "Pridėti filmą",
     "config-genre" => "Tvarkyti žanrus",
-    "config-films" => "Tvarkyti filmus"
+    "config-films" => "Tvarkyti filmus",
+    "delete" => "",
+    "update" => ""
 ];
