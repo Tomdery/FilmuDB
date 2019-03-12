@@ -11,7 +11,18 @@ catch (Expeption $e) {
 }
 
 $genres = $stmt->fetchAll();
-$pdo = null;
+
+try {
+
+    $data = $pdo->prepare('SELECT * FROM filmai INNER JOIN zanrai on filmai.filmo_id = zanrai.id WHERE filmai.filmo_id = :id;');
+    $data -> bindParam(":id", $id, PDO::PARAM_INT);
+    $data -> execute();
+    $naujas = $data -> fetchAll();
+}
+catch (Expeption $e) {
+    echo "Klaida: Negaliu gauti duomenų iš DB";
+    exit;
+}
 
 
 if(isset($_POST['submit'])){
@@ -37,22 +48,24 @@ if(isset($_POST['submit'])){
 
     header('location: ?page=all-films');
 }
+
 ?>
 
 
+<?php foreach ($naujas as $kazas): ?>
 <form method="POST">
 <div class="col-sm-3">
-    <label>Filmo pavadinimas</label><input type="text" name="pavadinimas" class="form-control" placeholder="Įveskite filmo pavadinima">
+    <label>Filmo pavadinimas</label><input type="text" name="pavadinimas" class="form-control" value="<?=$kazas['pavadinimas'];?>" placeholder="Įveskite filmo pavadinima">
 </div>
 
 <div class="col-sm-3">
     <label>Aprašymas</label>
-    <textarea name="aprasymas" class="form-control" cols="51" rows="3" placeholder="Įveskite aprašymą"></textarea>
+    <textarea name="aprasymas" class="form-control" cols="51" rows="3" placeholder="Įveskite aprašymą"><?=$kazas['aprasymas'];?></textarea>
 </div>
 
 <div class="col-sm-3">
     <label>Premjeros data</label>
-    <input type="text" class="form-control" name="premjeros_data" placeholder="Įveskite premjeros data">
+    <input type="text" class="form-control" name="premjeros_data" value="<?=$kazas['premjeros_data'];?>" placeholder="Įveskite premjeros data">
 </div>
 
 <div class="col-sm-3">
@@ -69,3 +82,4 @@ if(isset($_POST['submit'])){
 </div>
 
 </form>
+<?php endforeach; ?>

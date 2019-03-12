@@ -51,12 +51,13 @@ if(isset($_POST['submit'])){
 <div class="col-sm-3">
     <label>Žanras</label>
     <select name="zanras" class="form-control">
-            <<option>Pasirinkite žanrą</option>
+            <option>Pasirinkite žanrą</option>
             <?php foreach ($genres as $genre):?>
             <option value="<?=$genre['id']?>"><?=$genre['zanras'];?></option>
             <?php endforeach;?>
         </select>
 </div>
+<br>
 <div class="col-sm-3">
     <button type="submit" class="btn btn-success" name="submit">Pridėti</button>
 </div>
