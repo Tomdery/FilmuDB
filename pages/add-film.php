@@ -13,16 +13,23 @@ $pdo = null;
 
 if(isset($_POST['submit'])){
     try {
-        $pdo = new PDO($dsn, $user, $pass, $options);
+        if(!empty($_POST['pavadinimas']) || !empty($_POST['aprasymas']) || !empty($_POST['premjeros_data'])){
+            $pdo = new PDO($dsn, $user, $pass, $options);
 
-        $stmt = "INSERT INTO filmai (pavadinimas, aprasymas, premjeros_data, zanro_id) VALUES(:pavadinimas, :aprasymas, :premjeros_data, :zanras)";
-        $query = $pdo->prepare($stmt);
-        $query->execute(array(
-             ':pavadinimas' => $_POST['pavadinimas'],
-            ':aprasymas' => $_POST['aprasymas'],
-            ':premjeros_data' => $_POST['premjeros_data'],
-            ':zanras' => $_POST['zanras']
-        ));
+            $stmt = "INSERT INTO filmai (pavadinimas, aprasymas, premjeros_data, zanro_id) VALUES(:pavadinimas, :aprasymas, :premjeros_data, :zanras)";
+            $query = $pdo->prepare($stmt);
+            $query->execute(array(
+                 ':pavadinimas' => $_POST['pavadinimas'],
+                ':aprasymas' => $_POST['aprasymas'],
+                ':premjeros_data' => $_POST['premjeros_data'],
+                ':zanras' => $_POST['zanras']
+            ));
+            header('location: ?page=all-films');
+        }
+        else{
+            echo '<p style="color:red;">Klaida. Užpildyti ne visi laukeliai.</p>';
+        }
+
     }
     catch (Expection $e) {
         echo "Negaliu pridėti naujo įrašo";
