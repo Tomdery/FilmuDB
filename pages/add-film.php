@@ -1,5 +1,14 @@
 <?php
 
+session_start();
+
+if ($_SESSION['username'] == "admin") {
+    echo "Sveiki";
+}
+else {
+    header('location: ?page=login');
+}
+
 try {
     $stmt = $pdo->query('SELECT * FROM zanrai');
 }
@@ -37,6 +46,7 @@ if(isset($_POST['submit'])){
         exit;
     }
 }
+
 
 ?>
 

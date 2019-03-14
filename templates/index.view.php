@@ -25,10 +25,10 @@
         <?php include "_partials/nav.view.php";?>
 
 
-
         <div class="container-fluid">
             <?php include "inc/sitename.php";?>
             <h1><?=$siteName;?></h1>
+            
 
             <?php include "inc/router.php";?>
 

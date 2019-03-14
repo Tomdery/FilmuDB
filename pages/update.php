@@ -13,7 +13,6 @@ catch (Expeption $e) {
 $genres = $stmt->fetchAll();
 
 try {
-
     $data = $pdo->prepare('SELECT * FROM filmai INNER JOIN zanrai on filmai.filmo_id = zanrai.id WHERE filmai.filmo_id = :id;');
     $data -> bindParam(":id", $id, PDO::PARAM_INT);
     $data -> execute();
@@ -27,19 +26,23 @@ catch (Expeption $e) {
 
 if(isset($_POST['submit'])){
  try {
+    if(!empty($_POST['pavadinimas']) || !empty($_POST['aprasymas']) || !empty($_POST['premjeros_data'])){
         $pdo = new PDO($dsn, $user, $pass, $options);
 
-        $stmt = "UPDATE filmai SET pavadinimas=:pavadinimas, aprasymas=:aprasymas, premjeros_data=:premjeros_data, zanro_id=:zanras 
+        $stmt = "UPDATE filmai SET pavadinimas=:pavadinimas, aprasymas=:aprasymas, premjeros_data=:premjeros_data 
         WHERE filmai.filmo_id=:id";
         $query = $pdo->prepare($stmt);
         $query->execute(array(
              ':pavadinimas' => $_POST['pavadinimas'],
             ':aprasymas' => $_POST['aprasymas'],
             ':premjeros_data' => $_POST['premjeros_data'],
-            ':zanras' => $_POST['zanras'],
             ':id' => $id
         ));
     }
+    else{
+        echo '<p style="color:red;">Klaida. Užpildyti ne visi laukeliai.</p>';
+    }
+}
     catch (Expection $e) {
         echo "Negaliu pridėti naujo įrašo";
         echo $e->getMessage();
@@ -55,17 +58,17 @@ if(isset($_POST['submit'])){
 <?php foreach ($naujas as $kazas): ?>
 <form method="POST">
 <div class="col-sm-3">
-    <label>Filmo pavadinimas</label><input type="text" name="pavadinimas" class="form-control" value="<?=$kazas['pavadinimas'];?>" placeholder="Įveskite filmo pavadinima">
+    <label>Filmo pavadinimas</label><input type="text" name="pavadinimas" class="form-control" value="<?=$kazas['pavadinimas'];?>" placeholder="Įveskite filmo pavadinima" required>
 </div>
 
 <div class="col-sm-3">
     <label>Aprašymas</label>
-    <textarea name="aprasymas" class="form-control" cols="51" rows="3" placeholder="Įveskite aprašymą"><?=$kazas['aprasymas'];?></textarea>
+    <textarea name="aprasymas" class="form-control" cols="51" rows="3" required placeholder="Įveskite aprašymą"><?=$kazas['aprasymas'];?></textarea>
 </div>
 
 <div class="col-sm-3">
     <label>Premjeros data</label>
-    <input type="text" class="form-control" name="premjeros_data" value="<?=$kazas['premjeros_data'];?>" placeholder="Įveskite premjeros data">
+    <input type="text" class="form-control" name="premjeros_data" value="<?=$kazas['premjeros_data'];?>" required placeholder="Įveskite premjeros data">
 </div>
 
 <div class="col-sm-3">
